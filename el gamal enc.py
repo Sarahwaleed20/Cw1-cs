@@ -4,7 +4,7 @@ def is_prime(n):
     "Check if a number is prime." 
     if n < 2: 
         return False 
-    for i in range(2, n): 
+    for i in range(2,int(n**0.5) + 1): 
         if n % i == 0: 
             return False 
     return True 
@@ -30,6 +30,7 @@ def elgamal_encrypt(public_key, plaintext):
     k = random.randint(1, p - 2) 
     c1 = (g ** k) % p 
     c2 = (plaintext * (y ** k)) % p 
+    return (c1, c2)  
 
 def elgamal_decrypt(private_key, ciphertext, public_key): 
     "Decrypt the ciphertext using the ElGamal algorithm." 
@@ -47,3 +48,15 @@ def mod_inverse(a, p):
         if (a * i) % p == 1: 
             return i 
     raise ValueError("Mod inverse does not exist")
+
+if __name__ == "__main__":
+    public_key, private_key = elgamal_keygen()
+    print("Public Key:", public_key)
+    print("Private Key:", private_key)
+
+    plaintext = 42  
+    ciphertext = elgamal_encrypt(public_key, plaintext)
+    print("Ciphertext:", ciphertext)
+
+    decrypted_plaintext = elgamal_decrypt(private_key, ciphertext, public_key)
+    print("Decrypted Plaintext:", decrypted_plaintext)
