@@ -48,13 +48,20 @@ def mod_inverse(a, p):
         if (a * i) % p == 1: 
             return i 
     raise ValueError("Mod inverse does not exist")
-
+def get_user_input():
+    "Get plaintext input from the user."
+    while True:
+        try:
+            plaintext = int(input("Enter a message to encrypt (as an integer): "))
+            return plaintext
+        except ValueError:
+            print("Invalid input. Please enter an integer.")
 if __name__ == "__main__":
     public_key, private_key = elgamal_keygen()
     print("Public Key:", public_key)
     print("Private Key:", private_key)
 
-    plaintext = 42  
+    plaintext = get_user_input()  
     ciphertext = elgamal_encrypt(public_key, plaintext)
     print("Ciphertext:", ciphertext)
 
